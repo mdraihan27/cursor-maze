@@ -131,6 +131,6 @@ end.addEventListener('mouseover' , function(event){
         clearInterval(intervalId)
         startButtonCheck = false
         startButton.innerText = 'Restart'
-        countdown.innerText = 'Congratulations!! You have completed in '+ (30-count)+ ' second(s)'
+        countdown.innerText = 'Congratulations!! You have completed in '+ (60-count)+ ' second(s)'
     }
 })
