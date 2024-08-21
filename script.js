@@ -28,7 +28,7 @@ const footer = document.getElementById('footer')
 const sblocks = document.getElementsByClassName('sblock');
 const end = document.getElementById('end')
 
-let count=30
+let count=60
 let startButtonCheck = false
 
 const header = document.getElementById('header')
@@ -45,19 +45,25 @@ startButton.addEventListener('click' , function(event){
     if(startButtonCheck === false){
         body.setAttribute('style' , `cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 30 30"><circle cx="15" cy="15" r="10" fill="%23FFF" stroke="%23000" stroke-width="0"></circle></svg>') 30 30 ,auto !important;`)
     
-        startButton.setAttribute('style' , `cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="%23FFF" stroke="%23000" stroke-width="0"></circle></svg>') 24 24 ,auto !important;`)
-        footer.setAttribute('style' , `cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="%23FFF" stroke="%23000" stroke-width="0"></circle></svg>') 24 24 ,auto !important;`)
+        startButton.setAttribute('style' , `cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23FFF" stroke="%23000" stroke-width="0"></circle></svg>') 24 24 ,auto !important;`)
+        footer.setAttribute('style' , `cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="%23FFF" stroke="%23000" stroke-width="0"></circle></svg>') 24 24 ,auto !important;`)
     
     
         startButtonCheck = true 
 
         event.target.innerText = 'Stop'
 
-        count = 30
+        count = 60
+
+        countdown.style.color = 'black'
 
         countdown.innerText = count
 
         intervalId = setInterval(updateTimer, 1000)
+
+        for(sblock of sblocks){
+            sblock.style.backgroundColor = '#334155'
+        }
         
     }else {
         body.setAttribute('style' , `cursor: auto`)
@@ -70,9 +76,7 @@ startButton.addEventListener('click' , function(event){
 
         clearInterval(intervalId)
 
-        for(sblock of sblocks){
-            sblock.style.removeProperty('color')
-        }
+        
     }
 })
 
@@ -82,6 +86,11 @@ for(sblock of sblocks){
 
             if(startButtonCheck){
                 event.target.style.backgroundColor = 'red'
+                clearInterval(intervalId)
+                countdown.style.color = 'red'
+                countdown.innerText = 'Wrong step mate, click restart to Try again'
+                startButton.innerText = 'Restart'
+                startButtonCheck = false
             }
     })
 }
@@ -89,7 +98,10 @@ for(sblock of sblocks){
 
 
 function updateTimer(){
+    
     count--
+
+    
 
     if(count>10){
         countdown.innerText = count
@@ -100,6 +112,14 @@ function updateTimer(){
 
     }
 
+    if(count === 0){
+        clearInterval(intervalId);
+        countdown.style.color = 'red'
+        countdown.innerText = 'Times Up, click restart to try again'
+    }
+
+
+
 
     
     
@@ -109,7 +129,8 @@ function updateTimer(){
 end.addEventListener('mouseover' , function(event){
     if(startButtonCheck===true && count>0){
         clearInterval(intervalId)
-
+        startButtonCheck = false
+        startButton.innerText = 'Restart'
         countdown.innerText = 'Congratulations!! You have completed in '+ (30-count)+ ' second(s)'
     }
 })
